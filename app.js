@@ -22,7 +22,7 @@ app.get("/", (req, res) => {
 const employeeRoutes = require("./routes/user-router");
 
 // using as middleware
-app.use("/api/v1/employees", employeeRoutes);
+app.use("/api/v1/employess", employeeRoutes);
 
 // listen for requests
 app.listen(port, () => {

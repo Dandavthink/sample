@@ -6,8 +6,7 @@ const mysql = require("mysql");
 const dbConn = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "bala",
-  database: "gobi",
+  database: "sys",
 });
 dbConn.connect(function (err) {
   if (err) throw err;

@@ -3,19 +3,11 @@ var dbConn = require("../config/db.config");
 
 //Employee object create
 var Employee = function (employee) {
-  this.first_name = employee.first_name;
-  this.last_name = employee.last_name;
-  this.email = employee.email;
-  this.phone = employee.phone;
-  this.organization = employee.organization;
-  this.designation = employee.designation;
-  this.salary = employee.salary;
-  this.status = employee.status ? employee.status : 1;
-  this.created_at = new Date();
-  this.updated_at = new Date();
+  this.id = employee.id;
+  this.name = employee.name;
 };
 Employee.create = function (newEmp, result) {
-  dbConn.query("INSERT INTO employees set ?", newEmp, function (err, res) {
+  dbConn.query("INSERT INTO employess set ?", newEmp, function (err, res) {
     if (err) {
       console.log("error: ", err);
       result(err, null);
@@ -27,7 +19,7 @@ Employee.create = function (newEmp, result) {
 };
 Employee.findById = function (id, result) {
   dbConn.query(
-    "Select * from employees where id = ? ",
+    "Select * from employess where id = ? ",
     id,
     function (err, res) {
       if (err) {
@@ -40,7 +32,7 @@ Employee.findById = function (id, result) {
   );
 };
 Employee.findAll = function (result) {
-  dbConn.query("Select * from employees", function (err, res) {
+  dbConn.query("Select * from employess", function (err, res) {
     if (err) {
       console.log("error: ", err);
       result(null, err);
