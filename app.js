@@ -13,16 +13,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
 
-// define a root route
-app.get("/", (req, res) => {
-  res.send("Hello World");
-});
-
-// Require employee routes
-const employeeRoutes = require("./routes/user-router");
-
-// using as middleware
-app.use("/api/v1/employess", employeeRoutes);
+require('./routes/index')(app);
 
 // listen for requests
 app.listen(port, () => {
