@@ -9,5 +9,39 @@ module.exports = {
         if(result && result.length){
             return result;
         }
+    },
+
+    createSlot:async(data) => {
+        let queryName = "createSlot";
+        let bind = [data];
+        let query = " insert into slot(starting_point,ending_point,starting_time,ending_time,is_trip_started,is_trip_completed,total_seats,booked_seats) ";
+        query += ' values(?) '
+        let result = await db.executeQuery(query,bind,{},queryName,dbname);
+        if(result.affectedRows) {
+            return {status:200,message:"Successfully Created"}
+        }
+    },
+
+    updateDriveStatus:async(data) => {
+        try{
+            if(data && data.isStarted && !data.isCompleted){
+                let query = ` update slot set  is_trip_started = true where id = ${data.id} `;
+                let queryName = "updateDriveStatus";
+                let result = await db.executeQuery(query,[],{},queryName,dbname);
+                if(result && result.affectedRows > 0){
+                    return {status:200,message:"Update successfully"}
+                }
+            } else if(data && !data.isStarted && data.isCompleted){
+                let query = ` update slot set  is_trip_completed = true where id = ${data.id} `;
+                let queryName = "updateDriveStatus";
+                let result = await db.executeQuery(query,[],{},queryName,dbname);
+                if(result && result.affectedRows > 0){
+                    return {status:200,message:"Update successfully"}
+                }
+            }
+            
+        }catch(err){
+            return err
+        }
     }
 }

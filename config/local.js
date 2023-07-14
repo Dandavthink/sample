@@ -1,9 +1,10 @@
 const config = {
     mySqlDbConnection: {
-        host: 'local',
+        host: 'localhost',
         port: 3306,
         database: 'vdrive',
         user: 'root',
+        password:'password',
         multipleStatements: true
     }
 }
