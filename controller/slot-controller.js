@@ -5,6 +5,7 @@ module.exports = {
         try {
             let slotList = [];
             let result = await slotQuery.getSlotList();
+            console.log("slot list api called");
             if(result && result.length > 0){
                 result.forEach(ele => {
                     let obj = {
@@ -40,6 +41,7 @@ module.exports = {
                 total_seats:7,
                 booked_seats:0
             }
+            console.log("Create slot called");
             let result = await slotQuery.createSlot(queryData);
             return result;
         } catch (err) {

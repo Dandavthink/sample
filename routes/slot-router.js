@@ -15,6 +15,6 @@ router.post('/create-slot',async(req,res) => {
 router.put('/update-drive-status', async(req,res) => {
     let response = await slotController.updateDriveStatus(req.body);
     res.send(response);
-})
+});
 
 module.exports = { slotRouter: router }

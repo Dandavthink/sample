@@ -1,56 +1,35 @@
-"use strict";
-const Employee = require("../model/user.model");
-exports.findAll = function (req, res) {
-  Employee.findAll(function (err, employee) {
-    console.log("controller");
-    if (err) res.send(err);
-    console.log("res", employee);
-    res.send(employee);
-  });
-};
-exports.create = function (req, res) {
-  const new_employee = new Employee(req.body);
-  //handles null error
-  if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
-    res
-      .status(400)
-      .send({ error: true, message: "Please provide all required field" });
-  } else {
-    Employee.create(new_employee, function (err, employee) {
-      if (err) res.send(err);
-      res.json({
-        error: false,
-        message: "Employee added successfully!",
-        data: employee,
-      });
-    });
-  }
-};
-exports.findById = function (req, res) {
-  Employee.findById(req.params.id, function (err, employee) {
-    if (err) res.send(err);
-    res.json(employee);
-  });
-};
-exports.update = function (req, res) {
-  if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
-    res
-      .status(400)
-      .send({ error: true, message: "Please provide all required field" });
-  } else {
-    Employee.update(
-      req.params.id,
-      new Employee(req.body),
-      function (err, employee) {
-        if (err) res.send(err);
-        res.json({ error: false, message: "Employee successfully updated" });
+const userQuery = require('../query/user-query');
+
+module.exports = {
+
+  createUser:async(data) => {
+    try{
+    let result = await userQuery.createUser(data);
+    return result;
+    }catch(err){
+      return err
+    }
+  },
+
+  getUserDetails:async() => {
+    try{
+      let userList = [];
+      let result = await userQuery.getUserDetails();
+      console.log('get user api called')
+      if(result && result.length && result.length > 0){
+        result.forEach(ele => {
+          let obj = {
+            id:ele.id,
+            name:ele.name,
+            location:ele.location,
+            employeeId:ele.emp_id
+          }
+          userList.push(obj);
+        })
       }
-    );
+      return userList;
+    }catch(err){
+      return err;
+    }
   }
-};
-exports.delete = function (req, res) {
-  Employee.delete(req.params.id, function (err, employee) {
-    if (err) res.send(err);
-    res.json({ error: false, message: "Employee successfully deleted" });
-  });
-};
+}
